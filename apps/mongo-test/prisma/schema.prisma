@@ -24,8 +24,8 @@ model Order {
   customerId String?
   discount   Float?
   id         String    @id @default(auto()) @map("_id") @db.ObjectId
-  product    Product?  @relation(fields: [productId], references: [id])
-  productId  String?
+  product    Product[] @relation(fields: [productIds], references: [id])
+  productIds String[]  @db.ObjectId
   quantity   Int?
   totalPrice Int?
   updatedAt  DateTime  @updatedAt
@@ -62,7 +62,8 @@ model Product {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   itemPrice   Float?
   name        String?
-  orders      Order[]
+  orders      Order[]  @relation(fields: [ordersIds], references: [id])
+  ordersIds   String[] @db.ObjectId
   updatedAt   DateTime @updatedAt
 }
 
